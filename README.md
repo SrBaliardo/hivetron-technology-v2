@@ -11,7 +11,7 @@ Com uma equipe diversificada de especialistas, garantimos soluções que são ta
 
 Seja para startups que estão começando ou empresas consolidadas que buscam inovação, a Hivetron está aqui para construir, conectar e entregar.
 
-Pode acessar a página <a href="https://hivetron-technology.vercel.app/">- AQUI -</a>
+Pode acessar a página <a href="https://hivetron-technology-v2.vercel.app/">- AQUI -</a>
 
 ## Equipe
 
