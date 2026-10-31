@@ -5,24 +5,26 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "node scripts/serve.cjs",
+    "preview": "node scripts/serve.cjs",
+    "lint": "eslint",
+    "format": "prettier --write pages src scripts tests next.config.mjs eslint.config.mjs jsconfig.json package.json README.md docs .prettierrc.json",
+    "format:check": "prettier --check pages src scripts tests next.config.mjs eslint.config.mjs jsconfig.json package.json README.md docs .prettierrc.json",
+    "test": "node --test tests/static-export.test.cjs",
+    "assets:optimize": "node scripts/optimize-assets.cjs"
   },
   "dependencies": {
-    "@ant-design/icons": "^6.1.0",
-    "@react-spring/web": "^10.0.3",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "antd": "^5.28.0",
-    "next": "16.0.1",
+    "next": "16.4.3",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "babel-plugin-react-compiler": "1.0.0",
-    "babel-plugin-styled-components": "^2.1.4",
     "eslint": "^9",
-    "eslint-config-next": "16.0.1"
+    "eslint-config-next": "16.4.3",
+    "prettier": "3.6.2"
   }
 }

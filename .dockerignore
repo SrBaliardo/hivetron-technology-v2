@@ -1,4 +1,9 @@
 /node_modules
+/.backups
+/.validation
+/.tmp
+/assets
+/docs
 /npm-debug.log
 /yarn-error.log
 

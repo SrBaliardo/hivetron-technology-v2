@@ -1,67 +1,107 @@
-# 👨🏻‍💻 HIVETRON Technology - Desenvolvimento de Software
+﻿# Hivetron Technology
 
-<br>
+Site institucional da Hivetron: software sob medida, ERP, aplicações web e
+desktop e integrações. Next.js Pages Router, React e styled-components, com
+exportação estática e recursos visuais locais.
 
-O site apresenta informações sobre a equipe, serviços, tecnologias utilizadas e projetos desenvolvidos pela empresa.
+## Desenvolvimento
 
-Somos uma rede dinâmica de desenvolvedores especializados, unidos para transformar ideias em soluções personalizadas e inovadoras.
+Use Node.js 22 LTS e npm. As versões efetivas estão no lockfile.
 
-Nosso objetivo é simplificar a complexidade do desenvolvimento de software, oferecendo projetos sob medida para atender às necessidades únicas de cada cliente.
-Com uma equipe diversificada de especialistas, garantimos soluções que são tanto funcionais quanto escaláveis.
+```sh
+npm ci
+npm run dev
+```
 
-Seja para startups que estão começando ou empresas consolidadas que buscam inovação, a Hivetron está aqui para construir, conectar e entregar.
+O desenvolvimento usa `http://localhost:3000`. Não é necessário configurar
+backend, autenticação ou variáveis de ambiente para esta landing page.
 
-Pode acessar a página <a href="https://hivetron-technology.vercel.app/">- AQUI -</a>
+## Produção e prévia
 
-## Equipe
+```sh
+npm run build
+npm start
+```
 
-<div>
+O build gera `out/`. A prévia serve essa pasta em `http://127.0.0.1:4173`.
+Defina `PORT` para usar outra porta. Ela é uma ferramenta local; em hospedagem,
+publique `out/` ou use o container Nginx. Nenhum comando publica automaticamente.
 
-- ### John Baliardo [Dev Frontend]<br> <a href="https://github.com/srbaliardo"> ![My Skills](https://skillicons.dev/icons?i=github) </a> <a href="https://www.linkedin.com/in/john-baliardo"> ![My Skills](https://skillicons.dev/icons?i=linkedin) </a>
+```sh
+docker build -t hivetron-site .
+docker run --rm -p 8080:80 hivetron-site
+```
 
-- ### Lucas Merino [Dev Backend]<br> <a href="https://github.com/lucasfmerino"> ![My Skills](https://skillicons.dev/icons?i=github) </a> <a href="https://www.linkedin.com/in/lucasfmerino"> ![My Skills](https://skillicons.dev/icons?i=linkedin) </a>
+O container usa Node 22 na compilação, instalação pelo lockfile e Nginx na
+entrega. Arquivos inexistentes retornam 404; assets versionados do Next recebem
+cache longo. Backups e fontes originais de imagem não entram na imagem Docker.
 
-</div>
+## Organização
 
-<br>
+- `pages/`: composição de rota, documento, estilos no servidor e inicialização.
+- `src/sections/`: abertura, serviços, projetos, abordagem, equipe, stack e contato.
+- `src/components/`: cabeçalho, rodapé, marca, ícones e entrada animada.
+- `src/content/`: textos, produtos, equipe, contatos e navegação.
+- `src/styles/`: tema, estilos globais e elementos de layout compartilhados.
+- `public/`: apenas recursos públicos, fontes licenciadas, sitemap e robots.
+- `assets/source/`: retratos originais para gerar versões otimizadas; fora de `out/`.
+- `scripts/`: prévia estática, otimização de imagens e obtenção opcional de fontes.
+- `tests/`: verificações da exportação e do servidor de prévia.
+- `docs/`: decisões e limites da modernização.
 
-## Serviços
+O padrão de manutenção está em [AGENTS.md](AGENTS.md). As decisões, fontes de
+conteúdo e limitações estão em [docs/modernizacao.md](docs/modernizacao.md).
 
-### Na Hivetron, transformamos desafios em soluções tecnológicas. Oferecemos uma gama de serviços personalizados para atender às necessidades específicas de cada cliente. Conheça o que podemos fazer por você:
+## Conteúdo e identidade
 
-- ### Desenvolvimento de Software Personalizado
+Edite os dados em `src/content/`. Cor, tipografia e largura de conteúdo ficam em
+`src/styles/theme.js`. A página mantém preto, amarelo, hexágonos e linguagem
+próxima. Respeita a preferência por movimento reduzido e mantém o conteúdo
+visível sem depender da animação de entrada.
 
-Criamos soluções sob medida para o seu negócio, garantindo que cada sistema seja projetado para atender às suas demandas específicas. Do planejamento à entrega, desenvolvemos aplicações robustas e escaláveis que impulsionam a sua empresa.<br>
+Apresentamos Hivetron ERP e MedalHive sem imagens ou dados de clientes.
+MedalHive é o nome público solicitado; pagamentos, hardware e sincronização da
+versão demonstrativa não são apresentados como integrações reais.
 
-- ### Implantação de Sistemas de Automação
+O domínio público atual é definido em `src/content/site.js`. Ao trocar domínio,
+atualize também `public/robots.txt` e `public/sitemap.xml`; os testes conferem a
+coerência com a URL canônica. Não publicar dados internos em `public/`.
 
-Otimize processos, reduza custos e aumente a eficiência com nossas soluções de automação. Integramos e configuramos sistemas que facilitam o gerenciamento e potencializam os resultados da sua operação.<br>
+## Recursos visuais
 
-- ### Design e Otimização de Sites e Landing Pages
+```sh
+npm run assets:optimize
+```
 
-Destaque sua presença online com sites e landing pages modernos, funcionais e otimizados para conversão. Nosso time combina design criativo com as melhores práticas de SEO para garantir que sua marca tenha impacto na web.<br>
+Regenera os retratos WebP e a imagem institucional de compartilhamento. Utiliza
+o Sharp já fornecido pela árvore de dependências do Next registrada no lockfile;
+não é uma etapa obrigatória do build. As versões otimizadas são versionadas.
+As fotografias originais ficam em `assets/source/`, sem distribuição pelo site.
 
-- ### Consultoria em Transformação Digital
+As fontes WOFF2 são locais e incluem suas licenças OFL em `public/fonts/`.
+`scripts/fetch-fonts.ps1` permite baixá-las novamente das fontes oficiais;
+exige rede e não é executado durante build ou navegação.
 
-Prepare sua empresa para o futuro com nossas consultorias estratégicas. Ajudamos você a implementar as melhores tecnologias e práticas para digitalizar processos, modernizar operações e alcançar novos níveis de produtividade.
+## Qualidade
 
-<br>
+```sh
+npm run format:check
+npm run lint
+npm run build
+npm test
+```
 
-## Technologias
+`npm test` usa a exportação já construída. Verifica recursos, âncoras, conteúdo,
+metadados e isolamento da prévia estática. Não abre navegador.
+`npm run format` aplica a formatação aos fontes e documentos de manutenção.
 
-Utilizamos tecnologias como:<br>
-![My Skills](https://skillicons.dev/icons?i=java,spring,docker,react,next,js)
+Uma alteração de UI também exige revisão visual, teclado, foco e navegação em
+celular e desktop. Nesta modernização, o usuário restringiu o navegador:
+solicite permissão antes de acessá-lo. Não declarar interações ou desempenho
+aprovados apenas por lint, build ou testes estáticos.
 
-<br>
+## Recuperação temporária
 
-## Contatos
-
-### Você pode entrar em contato conosco através dos canais:
-
-- #### Email: hivetron.dev@gmail.com
-- #### Telefone/Whatsapp: <a href="https://wa.me/5516988455588?text=" target="_blank">+55 (16) 988455588</a>
-
-<br><br>
-
-🤝 Autor<br>
-Desenvolvido por <a href="https://github.com/SrBaliardo">SrBaliardo</a><br>
+O código anterior foi preservado em um ZIP dentro de `.backups/`, ignorado pelo
+Git e Docker. Consulte o nome e as orientações em `docs/modernizacao.md`.
+Não remova esse backup antes de o usuário encerrar a necessidade de recuperação.

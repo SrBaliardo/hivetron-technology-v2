@@ -1,29 +1,20 @@
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json .
+COPY package.json package-lock.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
 RUN npm run build
 
-FROM nginx:alpine
-
-RUN rm /etc/nginx/conf.d/default.conf
+FROM nginx:stable-alpine
 
 COPY --from=builder /app/out /usr/share/nginx/html
 
-RUN echo "server { \
-    listen 80; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    location / { \
-        try_files \$uri \$uri/ /index.html; \
-    } \
-}" > /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

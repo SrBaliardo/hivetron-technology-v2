@@ -13,6 +13,11 @@
 # testing
 /coverage
 
+# Cópias e verificações locais, nunca publicar.
+/.backups/
+/.validation/
+/.tmp/
+
 # next.js
 /.next/
 /out/
